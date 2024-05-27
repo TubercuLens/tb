@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TubercuLens</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        function handlePrediction(message, imagePath) {
+            var resultContainer = document.getElementById('results-container');
+            var resultMessage = document.getElementById('result-message');
+            var resultImage = document.getElementById('result-image');
+
+            if (message) {
+                resultMessage.innerText = message;
+                resultContainer.style.display = 'block';
+
+                if (imagePath) {
+                    resultImage.src = imagePath;
+                    resultImage.alt = 'Uploaded Image';
+                    resultImage.style.display = 'block';
+                } else {
+                    resultImage.style.display = 'none';
+                }
+            } else {
+                resultContainer.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Tuberculosis Detection and Analysis</h1>
+        <a href="about.html" class="about-button">About</a>
+    </header>
+    
+    <main>
+        <section>
+            <h2>Upload Pulmonary Chest X-Ray</h2>
+            <form enctype="multipart/form-data" action="/predict" method="post" onsubmit="return handleFormSubmit()">
+                <label for="file" class="custom-file-upload">Choose File</label>
+                <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png">
+                <input type="submit" value="Upload" name="submit">
+            </form>
+        </section>
+
+        <section class="igra">
+            <h2 class="igra">Interferon-Gamma Release Assays (IGRAs) – Blood Tests for TB Infection</h2>
+            <h3 class="igra">IGRA Blood Test Results</h3>
+
+            <div class="igra-dropdown">
+                <button class="igra-button">Choose an option</button>
+                <div class="igra-content">
+                    <a href="#">Positive</a>
+                    <a href="#">Negative</a>
+                    <a href="#">I don't know</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="results-container" style="display: none;">
+            <h3>Results:</h3>
+            <p id="result-message"></p>
+            <img id="result-image" alt="Uploaded Image">
+        </section>
+    </main>
+
+    <footer>
+        Made by Sreenath Vadlamudi
+    </footer>
+
+    <script>
+        function handleFormSubmit() {
+            var fileInput = document.getElementById('file');
+            var formData = new FormData();
+            formData.append('file', fileInput.files[0]);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => handlePrediction(data.message, data.image_path))
+            .catch(error => console.error('Error:', error));
+
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>

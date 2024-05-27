@@ -1,0 +1,20 @@
+dataset
+|-- train
+|   |-- X-ray
+|   |   |-- xray_image1.jpg
+|   |   |-- xray_image2.jpg
+|   |   |-- ...
+|   |-- Non-X-ray
+|       |-- non_xray_image1.jpg
+|       |-- non_xray_image2.jpg
+|       |-- ...
+|-- validation
+|   |-- X-ray
+|   |   |-- xray_image3.jpg
+|   |   |-- xray_image4.jpg
+|   |   |-- ...
+|   |-- Non-X-ray
+|       |-- non_xray_image3.jpg
+|       |-- non_xray_image4.jpg
+|       |-- ...
+
